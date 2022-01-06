@@ -46,6 +46,13 @@ FROM Weather w1, Weather w2
 WHERE DATEDIFF(w1.recordDate, w2.recordDate) = 1 AND w1.temperature > w2.temperature
 ~~~~
 
+595. Big Countries
+~~~~sql
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000 OR population >= 25000000
+~~~~
+
 620. Not Boring Movies
 ~~~~sql
 SELECT c.*
