@@ -1,4 +1,4 @@
-# MYSQL-practice-from-github
+# MYSQL-practices-from-leetcode
 175. Combine Two Tables
 ~~~~sql
 SELECT p.firstName, p.lastName, a.city, a.state
