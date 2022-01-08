@@ -14,6 +14,22 @@ FROM Employee e
 WHERE e.salary < (SELECT MAX(salary) FROM Employee)
 ~~~~
 
+177. Nth Highest Salary
+~~~~sql
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+DECLARE M int;
+SET M = N -1;
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT DISTINCT e.salary AS "getNthHighestSalary(N)"
+      FROM Employee e 
+      ORDER BY e.salary DESC
+      LIMIT 1 OFFSET M
+  );
+END
+~~~~
+
 181. Employees Earning More Than Their Managers
 ~~~~sql
 SELECT e.name AS "Employee"
