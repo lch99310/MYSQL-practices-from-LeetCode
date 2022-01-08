@@ -30,6 +30,15 @@ SET M = N -1;
 END
 ~~~~
 
+178. Rank Scores
+~~~~sql
+SELECT s.score, DENSE_RANK() OVER(ORDER BY s.score DESC) AS "rank"
+FROM Scores s
+~~~~
+* Note: 
+* Rank generates ranking number based on total number. e.g.: 1,2,2,4,5.... 
+* Dense_Rank generate consecutive ranking number. e.g.: 1,2,2,3,4.....
+
 181. Employees Earning More Than Their Managers
 ~~~~sql
 SELECT e.name AS "Employee"
