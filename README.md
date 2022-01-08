@@ -7,6 +7,13 @@ LEFT JOIN Address a
 ON p.personId = a.personId
 ~~~~
 
+176. Second Highest Salary
+~~~~sql
+SELECT MAX(e.salary) AS "SecondHighestSalary"
+FROM Employee e
+WHERE e.salary < (SELECT MAX(salary) FROM Employee)
+~~~~
+
 181. Employees Earning More Than Their Managers
 ~~~~sql
 SELECT e.name AS "Employee"
