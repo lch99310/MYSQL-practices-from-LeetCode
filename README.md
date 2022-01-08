@@ -14,7 +14,7 @@ FROM Employee e, Employee m
 WHERE e.managerId = m.id AND e.salary > m.salary
 ~~~~
 
-183. Duplicate Emails
+182. Duplicate Emails
 ~~~~sql
 SELECT  p.email
 FROM Person p
@@ -39,6 +39,13 @@ WHERE c.id NOT IN (
     FROM Orders o)
 ~~~~
 
+196. Delete Duplicate Emails
+~~~~sql
+DELETE p1.*
+FROM Person p1, Person p2
+WHERE p1.email = p2.email AND p1.id > p2.id;
+~~~~
+
 197. Rising Temperature
 ~~~~sql
 SELECT w1.id
@@ -53,10 +60,44 @@ FROM World
 WHERE area >= 3000000 OR population >= 25000000
 ~~~~
 
+596. Classes More Than 5 Students
+~~~~sql
+SELECT c.class
+FROM Courses c
+GROUP BY c.class
+HAVING COUNT(c.student) >= 5
+~~~~
+
 620. Not Boring Movies
 ~~~~sql
 SELECT c.*
 FROM Cinema c
 WHERE (c.id % 2) = 1 AND c.description != "boring"
 ORDER BY rating desc
+~~~~
+
+627. Swap Salary  * (need to review)
+~~~~sql
+UPDATE Salary s
+SET s.sex = (CASE WHEN s.sex = "m" THEN "f" ELSE "m" END)
+~~~~
+
+1179. Reformat Department Table  * (need to review)
+~~~~sql
+SELECT d.id,
+SUM(CASE WHEN d.month = "Jan" THEN d.revenue ELSE NULL END) AS "Jan_Revenue",
+SUM(CASE WHEN d.month = "Feb" THEN d.revenue ELSE NULL END) AS "Feb_Revenue",
+SUM(CASE WHEN d.month = "Mar" THEN d.revenue ELSE NULL END) AS "Mar_Revenue",
+SUM(CASE WHEN d.month = "Apr" THEN d.revenue ELSE NULL END) AS "Apr_Revenue",
+SUM(CASE WHEN d.month = "May" THEN d.revenue ELSE NULL END) AS "May_Revenue",
+SUM(CASE WHEN d.month = "Jun" THEN d.revenue ELSE NULL END) AS "Jun_Revenue",
+SUM(CASE WHEN d.month = "Jul" THEN d.revenue ELSE NULL END) AS "Jul_Revenue",
+SUM(CASE WHEN d.month = "Aug" THEN d.revenue ELSE NULL END) AS "Aug_Revenue",
+SUM(CASE WHEN d.month = "Sep" THEN d.revenue ELSE NULL END) AS "Sep_Revenue",
+SUM(CASE WHEN d.month = "Oct" THEN d.revenue ELSE NULL END) AS "Oct_Revenue",
+SUM(CASE WHEN d.month = "Nov" THEN d.revenue ELSE NULL END) AS "Nov_Revenue",
+SUM(CASE WHEN d.month = "Dec" THEN d.revenue ELSE NULL END) AS "Dec_Revenue"
+FROM Department d
+GROUP BY d.id
+ORDER by d.id
 ~~~~
