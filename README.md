@@ -123,6 +123,15 @@ WHERE b.bonus < 1000 OR b.bonus IS null
 * Because it is possible that there is no bonus, use LEFT JOIN can fix this problem.
 * The difference between IS and =, IS is an operator tests a value against a Boolean value. = is eqaul to.
 
+586. Customer Placing the Largest Number of Orders
+~~~~sql
+SELECT o.customer_number
+FROM Orders o
+GROUP BY o.customer_number
+ORDER BY COUNT(o.order_number) DESC
+LIMIT 1
+~~~~
+
 595. Big Countries
 ~~~~sql
 SELECT name, population, area
