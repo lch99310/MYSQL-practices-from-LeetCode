@@ -102,7 +102,7 @@ WHERE (a.player_id, a.event_date) IN (
     GROUP BY player_id )
 ~~~~
 
-- Wrong answer↓ -
+Wrong answer↓
 ~~~~sql 
 SELECT a.player_id, a.device_id
 FROM Activity a 
@@ -111,6 +111,17 @@ HAVING MIN(a.event_date)
 ~~~~
 * Because HAVING has to be followed by a condition, however in SELECT clause there is no condition.
 * **Note: WHERE clause cannot follow by aggregation, HAVING clause can follow by aggregation. That's different!**
+
+577. Employee Bonus
+~~~~sql
+SELECT e.name, b.bonus
+FROM Employee e 
+LEFT JOIN Bonus b
+ON e.empId = b.empId
+WHERE b.bonus < 1000 OR b.bonus IS null
+~~~~
+* Because it is possible that there is no bonus, use LEFT JOIN can fix this problem.
+* The difference between IS and =, IS is an operator tests a value against a Boolean value. = is eqaul to.
 
 595. Big Countries
 ~~~~sql
