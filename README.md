@@ -92,6 +92,26 @@ FROM Activity a
 GROUP BY a.player_id
 ~~~~
 
+512. Game Play Analysis II
+~~~~sql
+SELECT a.player_id, a.device_id
+FROM Activity a 
+WHERE (a.player_id, a.event_date) IN (
+    SELECT player_id, MIN(event_date)
+    FROM Activity 
+    GROUP BY player_id )
+~~~~
+
+* Wrong answer ↓
+~~~~sql 
+SELECT a.player_id, a.device_id
+FROM Activity a 
+GROUP BY a.player_id
+HAVING MIN(a.event_date)
+~~~~
+Because HAVING has to be followed by a condition, however in SELECT clause there is no condition.
+**Note: WHERE clause cannot follow by aggregation, HAVING clause can follow by aggregation. That's different!**
+
 595. Big Countries
 ~~~~sql
 SELECT name, population, area
