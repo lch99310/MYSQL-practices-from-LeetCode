@@ -102,7 +102,7 @@ WHERE (a.player_id, a.event_date) IN (
     GROUP BY player_id )
 ~~~~
 
-* Wrong answer ↓
+<span style="color:red">Wrong answer↓</span>.
 ~~~~sql 
 SELECT a.player_id, a.device_id
 FROM Activity a 
