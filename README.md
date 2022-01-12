@@ -109,8 +109,8 @@ FROM Activity a
 GROUP BY a.player_id
 HAVING MIN(a.event_date)
 ~~~~
-Because HAVING has to be followed by a condition, however in SELECT clause there is no condition.
-**Note: WHERE clause cannot follow by aggregation, HAVING clause can follow by aggregation. That's different!**
+* Because HAVING has to be followed by a condition, however in SELECT clause there is no condition.
+* **Note: WHERE clause cannot follow by aggregation, HAVING clause can follow by aggregation. That's different!**
 
 595. Big Countries
 ~~~~sql
