@@ -71,6 +71,18 @@ WHERE c.id NOT IN (
     FROM Orders o)
 ~~~~
 
+184. Department Highest Salary
+~~~~sql
+SELECT d.name AS "Department", e.name AS "Employee", e.salary AS "Salary"
+FROM Employee e LEFT JOIN Department d
+ON e.departmentId = d.id
+WHERE (e.departmentId, e.salary) IN (
+    SELECT e.departmentId, MAX(e.salary)
+    FROM Employee e, Department d
+    WHERE e.departmentId = d.id
+    GROUP BY e.departmentId)
+~~~~
+
 196. Delete Duplicate Emails
 ~~~~sql
 DELETE p1.*
