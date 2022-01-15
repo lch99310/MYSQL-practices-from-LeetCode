@@ -173,6 +173,15 @@ UPDATE Salary s
 SET s.sex = (CASE WHEN s.sex = "m" THEN "f" ELSE "m" END)
 ~~~~
 
+1068. Product Sales Analysis I
+~~~~sql
+SELECT p.product_name, s.year, s.price
+FROM Sales s, Product p
+WHERE s.product_id = p.product_id AND s.sale_id IN (
+    SELECT DISTINCT(sale_id)
+    FROM Sales)
+~~~~
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
