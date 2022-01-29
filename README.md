@@ -135,6 +135,14 @@ WHERE b.bonus < 1000 OR b.bonus IS null
 * Because it is possible that there is no bonus, use LEFT JOIN can fix this problem.
 * The difference between IS and =, IS is an operator tests a value against a Boolean value. = is eqaul to.
 
+584. Find Customer Referee
+~~~~sql
+SELECT c.name
+FROM Customer c
+WHERE c.referee_id != 2 OR c.referee_id IS NULL
+~~~~
+* Note: != is the same as <> in MySQL
+
 586. Customer Placing the Largest Number of Orders
 ~~~~sql
 SELECT o.customer_number
