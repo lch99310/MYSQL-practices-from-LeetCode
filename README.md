@@ -181,6 +181,14 @@ UPDATE Salary s
 SET s.sex = (CASE WHEN s.sex = "m" THEN "f" ELSE "m" END)
 ~~~~
 
+1050. Actors and Directors Who Cooperated At Least Three Times
+~~~~sql
+SELECT ad.actor_id, ad.director_id
+FROM ActorDirector ad
+GROUP BY ad.actor_id, ad.director_id
+HAVING COUNT(ad.timestamp) >= 3
+~~~~
+
 1068. Product Sales Analysis I
 ~~~~sql
 SELECT p.product_name, s.year, s.price
@@ -188,6 +196,14 @@ FROM Sales s, Product p
 WHERE s.product_id = p.product_id AND s.sale_id IN (
     SELECT DISTINCT(sale_id)
     FROM Sales)
+~~~~
+
+1075. Project Employees I
+~~~~sql
+SELECT p.project_id, ROUND(AVG(e.experience_years), 2) AS "average_years"
+FROM Employee e, Project p
+WHERE e.employee_id = p.employee_id
+GROUP BY p.project_id
 ~~~~
 
 1179. Reformat Department Table  * (need to review)
