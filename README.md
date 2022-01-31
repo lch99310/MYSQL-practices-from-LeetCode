@@ -252,6 +252,15 @@ FROM (SELECT project_id, DENSE_RANK() OVER(ORDER BY COUNT(employee_id) DESC) AS 
 WHERE p.rank = 1
 ~~~~
 
+Wrong answer↓
+~~~~sql
+SELECT p.project_id
+FROM (SELECT project_id, DENSE_RANK() OVER(PARTITION BY project_id ORDER BY COUNT(employee_id) DESC) AS "rank" 
+     FROM Project) p
+WHERE p.rank = 1
+~~~~
+* NOTE: When PARTITION BY within OVER clause, it means rank within each partition. Howeverm when GROUP BY outside OVER clause, it means rank all groups.
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
