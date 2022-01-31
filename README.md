@@ -219,6 +219,22 @@ WHERE s.product_id = p.product_id AND s.sale_id IN (
     FROM Sales)
 ~~~~
 
+1069. Product Sales Analysis II
+~~~~sql
+SELECT s.product_id, SUM(s.quantity) AS "total_quantity"
+FROM Sales s
+GROUP BY s.product_id
+~~~~
+
+1070. Product Sales Analysis III
+~~~~sql
+SELECT s.product_id, s.year AS "first_year", s.quantity, s.price
+FROM Sales s
+WHERE (s.product_id, s.year) IN (
+                SELECT product_id, MIN(year) OVER (PARTITION BY product_id ORDER BY year ASC) AS "year"
+                FROM Sales)
+~~~~
+
 1075. Project Employees I
 ~~~~sql
 SELECT p.project_id, ROUND(AVG(e.experience_years), 2) AS "average_years"
