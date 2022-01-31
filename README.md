@@ -167,6 +167,27 @@ GROUP BY c.class
 HAVING COUNT(c.student) >= 5
 ~~~~
 
+597. Friend Requests I: Overall Acceptance Rate
+~~~~sql
+SELECT IFNULL(ROUND((COUNT(DISTINCT r.requester_id, r.accepter_id)/COUNT(DISTINCT f.sender_id, f.send_to_id)), 2), 0.00) AS "accept_rate" 
+FROM FriendRequest f, RequestAccepted r;
+~~~~
+* NOTE: You should not put () after DISTINCT clause
+
+612. Shortest Distance in a Plane
+~~~~sql
+SELECT ROUND(SQRT(MIN(POW((p1.x - p2.x), 2) + POW((p1.y - p2.y), 2))), 2) AS "shortest"
+FROM Point2D p1, Point2D p2
+WHERE p1.x != p2.x OR p1.y != p2.y
+~~~~
+
+613. Shortest Distance in a Line
+~~~~sql
+SELECT MIN(ABS(p1.x - p2.x)) AS "shortest"
+FROM Point p1, Point p2
+WHERE p1.x != p2.x
+~~~~
+
 620. Not Boring Movies
 ~~~~sql
 SELECT c.*
