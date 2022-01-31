@@ -243,6 +243,15 @@ WHERE e.employee_id = p.employee_id
 GROUP BY p.project_id
 ~~~~
 
+1076. Project Employees II
+~~~~sql
+SELECT p.project_id
+FROM (SELECT project_id, DENSE_RANK() OVER(ORDER BY COUNT(employee_id) DESC) AS "rank" 
+     FROM Project
+     GROUP BY project_id) p
+WHERE p.rank = 1
+~~~~
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
