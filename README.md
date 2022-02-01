@@ -188,6 +188,26 @@ FROM Point p1, Point p2
 WHERE p1.x != p2.x
 ~~~~
 
+619. Biggest Single Number
+~~~~sql
+SELECT MAX(mn.num) AS "num"
+FROM (SELECT num, COUNT(num) AS "count"
+     FROM MyNumbers
+     GROUP BY num) mn
+WHERE mn.count = 1
+~~~~
+
+Answer below should work too↓
+~~~~sql
+SELECT IFNULL(mn.num, NULL) AS "num"
+FROM MyNumbers mn
+GROUP BY mn.num
+HAVING COUNT(mn.num) = 1
+ORDER BY mn.num DESC
+LIMIT 1
+~~~~
+* NOTE: MAX() would take care of NULL on its own. If there is no match, MAX() would return NULL.
+
 620. Not Boring Movies
 ~~~~sql
 SELECT c.*
