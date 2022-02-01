@@ -281,6 +281,36 @@ WHERE p.rank = 1
 ~~~~
 * NOTE: When PARTITION BY within OVER clause, it means rank within each partition. Howeverm when GROUP BY outside OVER clause, it means rank all groups.
 
+1082. Sales Analysis I
+~~~~sql
+SELECT s.seller_id
+FROM (SELECT seller_id, DENSE_RANK() OVER(ORDER BY SUM(price) DESC) AS "rank"
+     FROM Sales s
+     GROUP BY s.seller_id) s
+WHERE s.rank = 1
+~~~~
+
+1083. Sales Analysis II
+~~~~sql
+SELECT DISTINCT s.buyer_id
+FROM Product p LEFT JOIN Sales s
+ON p.product_id = s.product_id
+WHERE p.product_name = "S8" AND s.buyer_id NOT IN (
+    SELECT s.buyer_id
+    FROM Product p LEFT JOIN Sales s
+    ON p.product_id = s.product_id
+    WHERE p.product_name = "iPhone")
+~~~~
+
+1084. Sales Analysis III
+~~~~sql
+SELECT p.product_id, p.product_name
+FROM Product p LEFT JOIN Sales s
+ON p.product_id = s.product_id
+GROUP BY p.product_id
+HAVING MIN(s.sale_date) >= '2019-01-01' AND MAX(s.sale_date) <= '2019-03-31'
+~~~~
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
