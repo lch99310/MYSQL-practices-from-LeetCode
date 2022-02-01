@@ -311,6 +311,14 @@ GROUP BY p.product_id
 HAVING MIN(s.sale_date) >= '2019-01-01' AND MAX(s.sale_date) <= '2019-03-31'
 ~~~~
 
+1148. Article Views I
+~~~~sql
+SELECT DISTINCT v.author_id AS "id"
+FROM Views v
+WHERE v.author_id = v.viewer_id
+ORDER BY v.author_id ASC
+~~~~
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
@@ -337,3 +345,15 @@ SELECT DATE_FORMAT(t.trans_date, '%Y-%m') AS "month", t.country, COUNT(t.state) 
 FROM Transactions t
 GROUP BY DATE_FORMAT(t.trans_date, "%Y-%m"), t.country
 ~~~~
+
+1251. Average Selling Price
+~~~~sql
+SELECT t.product_id, ROUND(SUM(t.values) / SUM(t.units), 2) AS "average_price"
+FROM (SELECT DISTINCT p.product_id, p.price, u.units, u.units * p.price AS "values"
+      FROM Prices p LEFT JOIN UnitsSold u
+      ON p.product_id = u.product_id AND
+      u.purchase_date BETWEEN p.start_date AND p.end_date
+      ) t
+GROUP BY t.product_id
+~~~~
+* NOTE: I think DISTINCT is necceasy here to remove duplicate.
