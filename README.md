@@ -379,6 +379,7 @@ FROM Students s LEFT JOIN Departments d
 ON d.id = s.department_id
 WHERE d.id IS null
 ~~~~
+* In MySQL, NULL is a special data type. If use = NULL, means nothing (nothing return). So in this case, we can only use IS NULL! 
 
 1741. Find Total Time Spent by Each Employee
 ~~~~sql
