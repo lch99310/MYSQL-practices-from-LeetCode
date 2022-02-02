@@ -319,6 +319,14 @@ WHERE v.author_id = v.viewer_id
 ORDER BY v.author_id ASC
 ~~~~
 
+1173. Immediate Food Delivery I
+~~~~sql
+SELECT ROUND(SUM(t.immediate) / COUNT(t.immediate)*100, 2) AS "immediate_percentage"
+FROM (SELECT d.*, IF(d.order_date = d.customer_pref_delivery_date, 1, 0) AS "immediate"
+     FROM Delivery d
+     ) t
+~~~~
+
 1179. Reformat Department Table  * (need to review)
 ~~~~sql
 SELECT d.id,
