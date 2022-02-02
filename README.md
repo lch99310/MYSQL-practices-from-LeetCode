@@ -381,6 +381,14 @@ WHERE d.id IS null
 ~~~~
 * In MySQL, NULL is a special data type. If use = NULL, means nothing (nothing return). So in this case, we can only use IS NULL! 
 
+1683. Invalid Tweets
+~~~~sql
+SELECT t.tweet_id
+FROM Tweets t
+WHERE CHAR_LENGTH(t.content) >15
+~~~~
+* LENGTH() returns the length of the string measured in bytes. CHAR_LENGTH() returns the length of the string measured in characters.
+
 1741. Find Total Time Spent by Each Employee
 ~~~~sql
 SELECT e.event_day AS "day", e.emp_id, SUM(e.out_time - e.in_time) AS "total_time"
@@ -393,4 +401,10 @@ GROUP BY e.emp_id, e.event_day
 SELECT p.product_id
 FROM Products p
 WHERE p.low_fats = "Y" AND p.recyclable = "Y"
+~~~~
+
+1873. Calculate Special Bonus
+~~~~sql
+SELECT e.employee_id, IF(e.employee_id % 2 !=0 AND e.name NOT LIKE "M%", e.salary, 0) AS "bonus"
+FROM Employees e
 ~~~~
