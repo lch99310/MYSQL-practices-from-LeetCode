@@ -365,3 +365,18 @@ FROM (SELECT DISTINCT p.product_id, p.price, u.units, u.units * p.price AS "valu
 GROUP BY t.product_id
 ~~~~
 * NOTE: I think DISTINCT is necceasy here to remove duplicate.
+
+1303. Find the Team Size
+~~~~sql
+SELECT e.employee_id, COUNT(e.team_id) OVER(PARTITION BY e.team_id) AS "team_size"
+FROM Employee e
+~~~~
+
+1350. Students With Invalid Departments
+~~~~sql
+SELECT s.id, s.name
+FROM Students s LEFT JOIN Departments d
+ON d.id = s.department_id
+WHERE d.id IS null
+~~~~
+
