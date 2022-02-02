@@ -380,3 +380,16 @@ ON d.id = s.department_id
 WHERE d.id IS null
 ~~~~
 
+1741. Find Total Time Spent by Each Employee
+~~~~sql
+SELECT e.event_day AS "day", e.emp_id, SUM(e.out_time - e.in_time) AS "total_time"
+FROM Employees e
+GROUP BY e.emp_id, e.event_day
+~~~~
+
+1757. Recyclable and Low Fat Products
+~~~~sql
+SELECT p.product_id
+FROM Products p
+WHERE p.low_fats = "Y" AND p.recyclable = "Y"
+~~~~
