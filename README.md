@@ -381,6 +381,15 @@ WHERE d.id IS null
 ~~~~
 * In MySQL, NULL is a special data type. If use = NULL, means nothing (nothing return). So in this case, we can only use IS NULL! 
 
+1587. Bank Account Summary II
+~~~~sql
+SELECT u.name, SUM(t.amount) AS "balance"
+FROM Transactions t LEFT JOIN Users u
+ON t.account = u.account
+GROUP BY t.account
+HAVING SUM(t.amount) > 10000
+~~~~
+
 1683. Invalid Tweets
 ~~~~sql
 SELECT t.tweet_id
@@ -388,6 +397,13 @@ FROM Tweets t
 WHERE CHAR_LENGTH(t.content) >15
 ~~~~
 * LENGTH() returns the length of the string measured in bytes. CHAR_LENGTH() returns the length of the string measured in characters.
+
+1693. Daily Leads and Partners
+~~~~sql
+SELECT ds.date_id, ds.make_name, COUNT(DISTINCT ds.lead_id) AS "unique_leads", COUNT(DISTINCT ds.partner_id) AS "unique_partners"
+FROM DailySales ds
+GROUP BY ds.date_id, ds.make_name
+~~~~
 
 1741. Find Total Time Spent by Each Employee
 ~~~~sql
