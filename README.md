@@ -89,6 +89,7 @@ DELETE p1.*
 FROM Person p1, Person p2
 WHERE p1.email = p2.email AND p1.id > p2.id;
 ~~~~
+* Tip: write SELECT query first, replace SELECT with DELETE 
 
 197. Rising Temperature
 ~~~~sql
@@ -381,6 +382,14 @@ WHERE d.id IS null
 ~~~~
 * In MySQL, NULL is a special data type. If use = NULL, means nothing (nothing return). So in this case, we can only use IS NULL! 
 
+1571. Warehouse Manager
+~~~~sql
+SELECT w.name AS "warehouse_name", SUM(p.Width*p.Length*p.Height*w.units) AS "volume"
+FROM Warehouse w JOIN Products p
+ON w.product_id = p.product_id
+GROUP BY w.name
+~~~~
+
 1587. Bank Account Summary II
 ~~~~sql
 SELECT u.name, SUM(t.amount) AS "balance"
@@ -417,6 +426,13 @@ GROUP BY e.emp_id, e.event_day
 SELECT p.product_id
 FROM Products p
 WHERE p.low_fats = "Y" AND p.recyclable = "Y"
+~~~~
+
+1821. Find Customers With Positive Revenue this Year
+~~~~sql
+SELECT c.customer_id
+FROM Customers c
+WHERE c.year = 2021 AND c.revenue > 0
 ~~~~
 
 1873. Calculate Special Bonus
