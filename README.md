@@ -175,6 +175,16 @@ FROM FriendRequest f, RequestAccepted r;
 ~~~~
 * NOTE: You should not put () after DISTINCT clause
 
+603. Consecutive Available Seats
+~~~~sql
+SELECT DISTINCT c1.seat_id
+FROM Cinema c1 JOIN Cinema c2
+ON ABS(c1.seat_id - c2.seat_id) =1
+WHERE c1.free = 1 AND c2.free = 1
+ORDER BY c1.seat_id ASC
+~~~~
+* NOTE: DISTINCT is needed, cuz join on abs = 1, which means it could be +1 or -1 and cause overlap.
+
 607. Sales Person
 ~~~~sql
 SELECT sp.name
