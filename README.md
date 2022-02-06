@@ -39,7 +39,17 @@ FROM Scores s
 * Rank generates ranking number based on total number. e.g.: 1,2,2,4,5.... 
 * Dense_Rank generate consecutive ranking number. e.g.: 1,2,2,3,4.....
 
-181. Employees Earning More Than Their Managers
+180. Consecutive Numbers
+~~~~sql
+SELECT DISTINCT l.num AS "ConsecutiveNums"
+FROM (SELECT num,
+     lag (num, 1) OVER(ORDER BY id) AS "lead1",
+     lag (num, 2) OVER(ORDER BY id) AS "lead2"
+     FROM logs) l
+WHERE l.num = l.lead1 AND l.num = l.lead2
+~~~~
+
+182. Employees Earning More Than Their Managers
 ~~~~sql
 SELECT e.name AS "Employee"
 FROM Employee e, Employee m
