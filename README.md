@@ -175,6 +175,18 @@ FROM FriendRequest f, RequestAccepted r;
 ~~~~
 * NOTE: You should not put () after DISTINCT clause
 
+607. Sales Person
+~~~~sql
+SELECT sp.name
+FROM SalesPerson sp
+WHERE sp.sales_id NOT IN (SELECT o.sales_id
+                         FROM Orders o
+                         LEFT JOIN Company c ON o.com_id = c.com_id
+                         LEFT JOIN SalesPerson sp ON sp.sales_id = o.sales_id
+                         WHERE c.name = "RED"
+                         );
+~~~~
+
 612. Shortest Distance in a Plane
 ~~~~sql
 SELECT ROUND(SQRT(MIN(POW((p1.x - p2.x), 2) + POW((p1.y - p2.y), 2))), 2) AS "shortest"
