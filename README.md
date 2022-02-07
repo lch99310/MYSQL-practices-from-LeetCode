@@ -141,6 +141,16 @@ SELECT a.player_id, a.event_date, SUM(a.games_played) OVER(PARTITION BY a.player
 FROM Activity a
 ~~~~
 
+550. Game Play Analysis IV
+~~~~sql
+SELECT ROUND(COUNT(DISTINCT b.player_id) / COUNT(DISTINCT a.player_id), 2) AS "fraction"
+FROM Activity a 
+LEFT JOIN (SELECT player_id, MIN(event_date) AS "first_date"
+            FROM Activity
+            GROUP BY player_id) b
+ON a.player_id = b.player_id AND DATEDIFF(a.event_date, b.first_date) = 1
+~~~~
+
 577. Employee Bonus
 ~~~~sql
 SELECT e.name, b.bonus
@@ -151,6 +161,15 @@ WHERE b.bonus < 1000 OR b.bonus IS null
 ~~~~
 * Because it is possible that there is no bonus, use LEFT JOIN can fix this problem.
 * The difference between IS and =, IS is an operator tests a value against a Boolean value. = is eqaul to.
+
+580. Count Student Number in Departments
+~~~~sql
+SELECT d.dept_name, COUNT(s.student_id) AS "student_number"
+FROM Student s RIGHT JOIN Department d
+ON s.dept_id = d.dept_id
+GROUP BY d.dept_id
+ORDER BY student_number DESC, d.dept_name;
+~~~~
 
 584. Find Customer Referee
 ~~~~sql
