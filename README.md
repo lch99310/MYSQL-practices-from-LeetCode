@@ -179,6 +179,20 @@ WHERE c.referee_id != 2 OR c.referee_id IS NULL
 ~~~~
 * Note: != is the same as <> in MySQL
 
+585. Investments in 2016
+~~~~sql
+SELECT ROUND(SUM(i.tiv_2016), 2) AS "tiv_2016"
+FROM Insurance i
+WHERE i.tiv_2015 IN (SELECT tiv_2015
+               FROM Insurance
+               GROUP BY tiv_2015
+               HAVING COUNT(pid) > 1)
+AND (i.lat, i.lon) IN (SELECT lat, lon
+             FROM Insurance
+             GROUP BY lat, lon
+             HAVING COUNT(pid) = 1)
+~~~~
+
 586. Customer Placing the Largest Number of Orders
 ~~~~sql
 SELECT o.customer_number
