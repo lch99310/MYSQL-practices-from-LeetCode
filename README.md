@@ -135,6 +135,12 @@ HAVING MIN(a.event_date)
 * Because HAVING has to be followed by a condition, however in SELECT clause there is no condition.
 * **Note: WHERE clause cannot follow by aggregation, HAVING clause can follow by aggregation. That's different!**
 
+534. Game Play Analysis III
+~~~~sql
+SELECT a.player_id, a.event_date, SUM(a.games_played) OVER(PARTITION BY a.player_id ORDER BY a.event_date ROWS BETWEEN unbounded preceding AND current row) AS "games_played_so_far"
+FROM Activity a
+~~~~
+
 577. Employee Bonus
 ~~~~sql
 SELECT e.name, b.bonus
