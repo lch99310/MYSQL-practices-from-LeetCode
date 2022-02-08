@@ -453,6 +453,13 @@ WHERE d.id IS null
 ~~~~
 * In MySQL, NULL is a special data type. If use = NULL, means nothing (nothing return). So in this case, we can only use IS NULL! 
 
+1378. Replace Employee ID With The Unique Identifier
+~~~~sql
+SELECT eu.unique_id, e.name
+FROM Employees e LEFT JOIN EmployeeUNI eu
+ON e.id = eu.id
+~~~~
+
 1571. Warehouse Manager
 ~~~~sql
 SELECT w.name AS "warehouse_name", SUM(p.Width*p.Length*p.Height*w.units) AS "volume"
