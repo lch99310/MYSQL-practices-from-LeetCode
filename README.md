@@ -383,6 +383,22 @@ GROUP BY p.product_id
 HAVING MIN(s.sale_date) >= '2019-01-01' AND MAX(s.sale_date) <= '2019-03-31'
 ~~~~
 
+1113. Reported Posts
+~~~~sql
+SELECT a.extra AS "report_reason", COUNT(DISTINCT a.post_id) AS "report_count"
+FROM Actions a
+WHERE a.action_date = "2019-07-04" AND a.action = "report"
+GROUP BY a.extra
+~~~~
+
+1141. User Activity for the Past 30 Days I
+~~~~sql
+SELECT a.activity_date AS "day", COUNT(DISTINCT a.user_id) AS "active_users"
+FROM Activity a
+WHERE DATEDIFF("2019-07-27", a.activity_date) < 30 AND a.activity_date <= "2019-07-27"
+GROUP BY a.activity_date
+~~~~
+
 1148. Article Views I
 ~~~~sql
 SELECT DISTINCT v.author_id AS "id"
