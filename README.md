@@ -454,6 +454,41 @@ GROUP BY t.product_id
 ~~~~
 * NOTE: I think DISTINCT is necceasy here to remove duplicate.
 
+1280. Students and Examinations
+~~~~sql
+SELECT stu.student_id, stu.student_name, sub.subject_name, COUNT(e.subject_name) AS "attended_exams"
+FROM Students stu
+JOIN Subjects sub 
+LEFT JOIN Examinations e 
+ON e.subject_name = sub.subject_name AND e.student_id = stu.student_id
+GROUP BY stu.student_id, sub.subject_name
+ORDER BY stu.student_id, sub.subject_name
+~~~~
+
+1294. Weather Type in Each Country
+~~~~sql
+SELECT c.country_name, (CASE 
+    WHEN AVG(w.weather_state) <= 15 THEN "Cold"
+    WHEN AVG(w.weather_state) >= 25 THEN "Hot"
+    ELSE "Warm" END) AS "weather_type"
+FROM Weather w LEFT JOIN Countries c
+ON w.country_id = c.country_id
+WHERE DATE_FORMAT(w.day, "%Y-%m") = "2019-11"
+GROUP BY c.country_id
+~~~~
+or
+~~~~sql
+SELECT c.country_name, (CASE 
+    WHEN AVG(w.weather_state) <= 15 THEN "Cold"
+    WHEN AVG(w.weather_state) >= 25 THEN "Hot"
+    ELSE "Warm" END) AS "weather_type"
+FROM Weather w LEFT JOIN Countries c
+ON w.country_id = c.country_id
+WHERE EXTRACT(YEAR_MONTH FROM w.day) = "201911"
+GROUP BY c.country_id
+~~~~
+* NOTE: END has to place after CASE WHEN. 
+
 1303. Find the Team Size
 ~~~~sql
 SELECT e.employee_id, COUNT(e.team_id) OVER(PARTITION BY e.team_id) AS "team_size"
@@ -474,6 +509,15 @@ WHERE d.id IS null
 SELECT eu.unique_id, e.name
 FROM Employees e LEFT JOIN EmployeeUNI eu
 ON e.id = eu.id
+~~~~
+
+1407. Top Travellers
+~~~~sql
+SELECT u.name, COALESCE(SUM(r.distance), 0) AS "travelled_distance"
+FROM Users u LEFT JOIN Rides r
+ON r.user_id = u.id
+GROUP BY u.id
+ORDER BY travelled_distance DESC, u.name ASC 
 ~~~~
 
 1571. Warehouse Manager
