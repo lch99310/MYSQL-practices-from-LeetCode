@@ -520,6 +520,14 @@ GROUP BY u.id
 ORDER BY travelled_distance DESC, u.name ASC 
 ~~~~
 
+1517. Find Users With Valid E-Mails
+~~~~sql
+SELECT u.user_id, u.name, u.mail
+FROM Users u
+WHERE REGEXP_LIKE(u.mail, "^[A-Za-z][A-Za-z0-9.\\-_]*@leetcode\\.com$")
+~~~~
+* NOTE: "-", "." have other meanings in reg exp. Has to escape by using \
+
 1571. Warehouse Manager
 ~~~~sql
 SELECT w.name AS "warehouse_name", SUM(p.Width*p.Length*p.Height*w.units) AS "volume"
