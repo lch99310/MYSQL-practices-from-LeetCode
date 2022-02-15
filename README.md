@@ -520,6 +520,26 @@ GROUP BY u.id
 ORDER BY travelled_distance DESC, u.name ASC 
 ~~~~
 
+1445. Apples & Oranges
+~~~~sql
+SELECT s1.sale_date, (s1.sold_num - s2.sold_num) AS "diff"
+FROM (SELECT *
+     FROM Sales
+     WHERE fruit = "apples") s1 JOIN 
+     (SELECT *
+      FROM Sales 
+      WHERE fruit = "oranges") s2
+      ON s1.sale_date = s2.sale_date
+ORDER BY s1.sale_date ASC
+~~~~
+or
+~~~~sql
+SELECT s.sale_date, SUM(IF(s.fruit = "apples", s.sold_num, -s.sold_num)) AS "diff"
+FROM Sales s
+GROUP BY s.sale_date
+ORDER BY s.sale_date ASC
+~~~~
+
 1517. Find Users With Valid E-Mails
 ~~~~sql
 SELECT u.user_id, u.name, u.mail
