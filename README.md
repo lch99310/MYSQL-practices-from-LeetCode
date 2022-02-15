@@ -554,6 +554,17 @@ GROUP BY t.account
 HAVING SUM(t.amount) > 10000
 ~~~~
 
+1607. Sellers With No Sales
+~~~~sql
+SELECT s.seller_name
+FROM Seller s LEFT JOIN Orders o
+ON s.seller_id = o.seller_id
+WHERE s.seller_id NOT IN (SELECT o.seller_id
+                         FROM Orders o
+                         WHERE YEAR(o.sale_date) = 2020)
+ORDER BY s.seller_name ASC
+~~~~
+
 1683. Invalid Tweets
 ~~~~sql
 SELECT t.tweet_id
