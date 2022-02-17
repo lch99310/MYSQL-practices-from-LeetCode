@@ -621,6 +621,14 @@ FROM Products p
 WHERE p.low_fats = "Y" AND p.recyclable = "Y"
 ~~~~
 
+1783. Grand Slam Titles
+~~~~sql
+SELECT p.player_id, p.player_name, SUM(p.player_id = c.Wimbledon) + SUM(p.player_id = c.Fr_open) + SUM(p.player_id = c.US_open) + SUM(p.player_id = c.Au_open) AS "grand_slams_count"
+FROM Championships c LEFT JOIN Players p
+ON p.player_id = c.Wimbledon OR p.player_id = c.Fr_open OR p.player_id = c.US_open OR p.player_id = c.Au_open
+GROUP BY p.player_id
+~~~~
+
 1821. Find Customers With Positive Revenue this Year
 ~~~~sql
 SELECT c.customer_id
@@ -632,4 +640,14 @@ WHERE c.year = 2021 AND c.revenue > 0
 ~~~~sql
 SELECT e.employee_id, IF(e.employee_id % 2 !=0 AND e.name NOT LIKE "M%", e.salary, 0) AS "bonus"
 FROM Employees e
+~~~~
+
+2084. Drop Type 1 Orders for Customers With Type 0 Orders
+~~~~sql
+SELECT o1.order_id, o1.customer_id, o1.order_type
+FROM Orders o1
+WHERE o1.order_type = 0 OR (o1.order_type = 1 AND o1.customer_id NOT IN (
+    SELECT customer_id 
+    FROM Orders 
+    WHERE order_type = 0))
 ~~~~
