@@ -511,6 +511,13 @@ FROM Employees e LEFT JOIN EmployeeUNI eu
 ON e.id = eu.id
 ~~~~
 
+1393. Capital Gain/Loss
+~~~~sql
+SELECT s.stock_name, SUM(IF(s.operation = "Sell", s.price, -s.price)) AS "capital_gain_loss"
+FROM Stocks s
+GROUP BY s.stock_name
+~~~~
+
 1407. Top Travellers
 ~~~~sql
 SELECT u.name, COALESCE(SUM(r.distance), 0) AS "travelled_distance"
