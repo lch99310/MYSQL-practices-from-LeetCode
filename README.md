@@ -495,6 +495,13 @@ SELECT e.employee_id, COUNT(e.team_id) OVER(PARTITION BY e.team_id) AS "team_siz
 FROM Employee e
 ~~~~
 
+1308. Running Total for Different Genders
+~~~~sql
+SELECT s.gender, s.day, SUM(s.score_points) OVER(PARTITION BY s.gender ORDER BY s.day) AS "total"
+FROM Scores s
+ORDER BY s.gender, s.day
+~~~~
+
 1350. Students With Invalid Departments
 ~~~~sql
 SELECT s.id, s.name
