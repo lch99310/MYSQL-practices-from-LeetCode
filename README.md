@@ -565,6 +565,39 @@ GROUP BY s.sale_date
 ORDER BY s.sale_date ASC
 ~~~~
 
+1468. Calculate Salaries
+~~~~sql
+SELECT s1.company_id, s1.employee_id, s1.employee_name, s1.salary
+FROM Salaries s1
+WHERE s1.company_id IN (SELECT s.company_id
+                        FROM Salaries s
+                        GROUP BY s.company_id
+                        HAVING MAX(s.salary) < 1000)
+UNION 
+SELECT s2.company_id, s2.employee_id, s2.employee_name, ROUND(s2.salary - s2.salary*0.24, 0) AS "salary"
+FROM Salaries s2
+WHERE s2.company_id IN (SELECT s.company_id
+                       FROM Salaries s
+                       GROUP BY s.company_id
+                        HAVING MAX(s.salary) >= 1000 and MAX(s.salary) <= 10000)
+UNION
+SELECT s3.company_id, s3.employee_id, s3.employee_name, ROUND(s3.salary - s3.salary*0.49, 0) AS "salary"
+FROM Salaries s3
+WHERE s3.company_id IN (SELECT s.company_id
+                       FROM Salaries s
+                       GROUP BY s.company_id
+                        HAVING MAX(s.salary) > 10000)
+~~~~
+OR
+~~~~sql
+SELECT s.company_id, s.employee_id, s.employee_name, (
+CASE WHEN MAX(s.salary) OVER(PARTITION BY s.company_id) < 1000 THEN s.salary
+WHEN MAX(s.salary) OVER(PARTITION BY s.company_id) BETWEEN 1000 AND 10000 THEN ROUND(s.salary - s.salary*0.24, 0)
+WHEN MAX(s.salary) OVER(PARTITION BY s.company_id)  >= 10000 THEN ROUND(s.salary - s.salary*0.49, 0) END) AS "salary"
+FROM Salaries s
+~~~~
+* NOTE: Don't forget to put END in the end of CASE WHEN clause
+
 1517. Find Users With Valid E-Mails
 ~~~~sql
 SELECT u.user_id, u.name, u.mail
@@ -654,10 +687,34 @@ FROM Customers c
 WHERE c.year = 2021 AND c.revenue > 0
 ~~~~
 
+1831. Maximum Transaction Each Day
+~~~~sql
+SELECT t.transaction_id
+FROM Transactions t
+WHERE (t.transaction_id, t.amount) IN (SELECT transaction_id, MAX(amount) OVER(PARTITION BY DATE(day)) AS "top"
+                          FROM Transactions
+                          )
+ORDER BY t.transaction_id ASC
+~~~~
+* NOTE: WHERE clause must contain two arguments because in subquery, there are two outputs. If not, error reports "operand should contain 1 column(s)"
+~~~~sql
+SELECT t.transaction_id
+FROM (SELECT transaction_id, DENSE_RANK() OVER(PARTITION BY DATE(day) ORDER BY amount DESC) AS "amount_rank"
+      FROM Transactions) t
+WHERE t.amount_rank = 1
+ORDER BY t.transaction_id ASC
+~~~~
+
 1873. Calculate Special Bonus
 ~~~~sql
 SELECT e.employee_id, IF(e.employee_id % 2 !=0 AND e.name NOT LIKE "M%", e.salary, 0) AS "bonus"
 FROM Employees e
+~~~~
+
+2066. Account Balance
+~~~~sql
+SELECT t.account_id, t.day, SUM(IF(t.type = "Deposit", t.amount, -t.amount)) OVER(PARTITION BY t.account_id ORDER BY t.day ASC) AS "balance"
+FROM Transactions t
 ~~~~
 
 2084. Drop Type 1 Orders for Customers With Type 0 Orders
