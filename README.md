@@ -536,6 +536,19 @@ FROM Stocks s
 GROUP BY s.stock_name
 ~~~~
 
+1398. Customers Who Bought Products A and B but Not C
+~~~~sql
+SELECT o.customer_id, c.customer_name
+FROM Orders o
+LEFT JOIN Customers c 
+ON c.customer_id = o.customer_id
+GROUP BY o.customer_id 
+HAVING SUM(o.product_name = "A") > 0 AND SUM(o.product_name = "B") > 0 AND o.customer_id NOT IN (SELECT customer_id
+                             FROM Orders 
+                             WHERE product_name = "C") 
+~~~~
+*NOTE: After GROUP BY, cannot use HAVING XXX = XX. Use SUM() > / < / =.
+
 1407. Top Travellers
 ~~~~sql
 SELECT u.name, COALESCE(SUM(r.distance), 0) AS "travelled_distance"
