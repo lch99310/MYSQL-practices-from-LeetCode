@@ -513,6 +513,17 @@ FROM Scores s
 ORDER BY s.gender, s.day
 ~~~~
 
+1327. List the Products Ordered in a Period
+~~~~sql
+SELECT  p.product_name, SUM(o.unit) AS "unit"
+FROM Orders o
+LEFT JOIN Products p
+ON o.product_id = p.product_id
+WHERE DATE_FORMAT(o.order_date, "%Y-%m") = "2020-02"
+GROUP BY o.product_id
+HAVING SUM(o.unit) >= 100
+~~~~
+
 1350. Students With Invalid Departments
 ~~~~sql
 SELECT s.id, s.name
@@ -669,6 +680,13 @@ WHERE CHAR_LENGTH(t.content) >15
 SELECT ds.date_id, ds.make_name, COUNT(DISTINCT ds.lead_id) AS "unique_leads", COUNT(DISTINCT ds.partner_id) AS "unique_partners"
 FROM DailySales ds
 GROUP BY ds.date_id, ds.make_name
+~~~~
+
+1699. Number of Calls Between Two Persons
+~~~~sql
+SELECT LEAST(c.from_id, c.to_id) AS "person1", GREATEST(c.from_id, c.to_id) AS "person2", COUNT(c.from_id) AS "call_count", SUM(c.duration) AS "total_duration"
+FROM Calls c
+GROUP BY person1, person2
 ~~~~
 
 1741. Find Total Time Spent by Each Employee
