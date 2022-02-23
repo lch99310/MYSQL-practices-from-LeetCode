@@ -756,6 +756,21 @@ SELECT t.account_id, t.day, SUM(IF(t.type = "Deposit", t.amount, -t.amount)) OVE
 FROM Transactions t
 ~~~~
 
+2072. The Winner University
+~~~~sql
+SELECT CASE
+WHEN (SELECT COUNT(student_id) FROM NewYork WHERE score >= 90) > (SELECT COUNT(student_id) FROM California WHERE score >= 90) THEN "New York University"
+WHEN (SELECT COUNT(student_id) FROM California WHERE score >= 90) > (SELECT COUNT(student_id) FROM NewYork WHERE score >= 90) THEN "California University"
+ELSE "No Winner" END AS "winner"
+~~~~
+
+2082. The Number of Rich Customers
+~~~~sql
+SELECT COUNT(DISTINCT s.customer_id) AS "rich_count"
+FROM Store s
+WHERE s.amount > 500
+~~~~
+
 2084. Drop Type 1 Orders for Customers With Type 0 Orders
 ~~~~sql
 SELECT o1.order_id, o1.customer_id, o1.order_type
