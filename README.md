@@ -742,6 +742,14 @@ SELECT e.employee_id, IF(e.employee_id % 2 !=0 AND e.name NOT LIKE "M%", e.salar
 FROM Employees e
 ~~~~
 
+2026. Low-Quality Problems
+~~~~sql
+SELECT p.problem_id
+FROM Problems p
+WHERE p.likes / (p.likes + p.dislikes) < 0.6
+ORDER BY p.problem_id
+~~~~
+
 2066. Account Balance
 ~~~~sql
 SELECT t.account_id, t.day, SUM(IF(t.type = "Deposit", t.amount, -t.amount)) OVER(PARTITION BY t.account_id ORDER BY t.day ASC) AS "balance"
