@@ -569,6 +569,15 @@ GROUP BY u.id
 ORDER BY travelled_distance DESC, u.name ASC 
 ~~~~
 
+1421. NPV Queries
+~~~~sql
+SELECT q.id, q.year, COALESCE(n.npv, 0) AS "npv"
+FROM Queries q 
+LEFT JOIN NPV n
+ON q.id = n.id AND q.year = n.year
+~~~~
+* COALESCE function means return first non-null. In this case, if n.npv = null, COALESCE will return first non-null, which is 0.
+
 1445. Apples & Oranges
 ~~~~sql
 SELECT s1.sale_date, (s1.sold_num - s2.sold_num) AS "diff"
