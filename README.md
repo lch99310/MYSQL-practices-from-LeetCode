@@ -383,7 +383,16 @@ GROUP BY p.product_id
 HAVING MIN(s.sale_date) >= '2019-01-01' AND MAX(s.sale_date) <= '2019-03-31'
 ~~~~
 
-1113. Reported Posts
+1112. Highest Grade For Each Student
+~~~~sql
+SELECT t.student_id, t.course_id, t.grade
+FROM (SELECT e.student_id, e.course_id, e.grade, ROW_NUMBER() OVER(PARTITION BY e.student_id ORDER BY e.grade DESC, e.course_id ASC) AS "rank"
+     FROM Enrollments e) t
+WHERE t.rank = 1
+ORDER BY t.student_id ASC
+~~~~
+
+1114. Reported Posts
 ~~~~sql
 SELECT a.extra AS "report_reason", COUNT(DISTINCT a.post_id) AS "report_count"
 FROM Actions a
@@ -718,6 +727,16 @@ SELECT p.player_id, p.player_name, SUM(p.player_id = c.Wimbledon) + SUM(p.player
 FROM Championships c LEFT JOIN Players p
 ON p.player_id = c.Wimbledon OR p.player_id = c.Fr_open OR p.player_id = c.US_open OR p.player_id = c.Au_open
 GROUP BY p.player_id
+~~~~
+
+1789. Primary Department for Each Employee
+~~~~sql
+SELECT e.employee_id, e.department_id
+FROM Employee e
+WHERE e.primary_flag = 'Y' OR e.employee_id IN (SELECT employee_id
+                                               FROM Employee
+                                               GROUP BY employee_id
+                                               HAVING COUNT(department_id) = 1)
 ~~~~
 
 1821. Find Customers With Positive Revenue this Year
